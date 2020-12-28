@@ -99,8 +99,8 @@ function validateConfig() {
     if (!protocol.test(rpc.buttons.primary.buttonRedirectUrl.toString())) {
         return console.error(ERROR(`ButtonRedirectUrl(s) provided does not contain either "http://" OR "https://".`));
     }
-    if (rpc.timestamps.startTimestamp && !Date.parse(rpc.timestamps.startTimestamp).valueOf() > 0 ||
-        rpc.timestamps.endTimestamp && !Date.parse(rpc.timestamps.endTimestamp).valueOf() > 0) {
+    if (rpc.timestamps.startTimestamp && !(new Date(rpc.timestamps.startTimestamp)).getTime() > 0 || rpc.timestamps.startTimestamp === '' ||
+        rpc.timestamps.endTimestamp && !(new Date(rpc.timestamps.endTimestamp)).getTime() > 0 || rpc.timestamps.endTimestamp === '') {
         return console.error(ERROR(`Timestamp(s) provided is not valid. Ensure you have provided an Epoch type.`));
     }
     console.log(SUCCESS(`Configuration is valid! Attempting to update ${client.user.username}#${client.user.discriminator}'s Rich Presence...`));
