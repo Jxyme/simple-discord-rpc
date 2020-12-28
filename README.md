@@ -34,41 +34,58 @@ If you receive the `RPC_CONNECTION_TIMEOUT` error, please refresh Discord with `
 
 ```json
 {
-    "clientId": "YOUR_DISCORD_DEVELOPER_APPLICATION_CLIENT_ID_GOES_HERE",
+    "clientId": "Your_developer_application_client_id_goes_here",
     "rich_presence": {
-        "details": "ANYTHING_ENTERED_HERE_WILL_DISPLAY_BELOW_THE_APPLICATION_NAME",
-        "state": "ANYTHING_ENTERED_HERE_WILL_DISPLAY_BELOW_THE_TEXT_ABOVE",
+        "details": "First_row_below_title",
+        "state": "Second_row_below_title",
         "assets": {
-            "largeImageText": "TEXT_ENTERED_HERE_WILL_DISPLAY_ON_LARGE_IMAGE_HOVER",
-            "largeImageKey": "ENTER_THE_LARGE_ART_ASSET_NAME_HERE",
-            "smallImageText": "TEXT_ENTERED_HERE_WILL_DISPLAY_ON_SMALL_IMAGE_HOVER",
-            "smallImageKey": "ENTER_THE_SMALL_ART_ASSET_NAME_HERE"
+            "largeImageText": "Text_shown_on_large_image_hover",
+            "largeImageKey": "Large_image_to_the_left_of_content",
+            "smallImageText": "Text_shown_on_small_image_hover",
+            "smallImageKey": "Small_image_to_the_left_of_content"
         },
         "buttons": {
             "primary": {
-                "buttonLabelText": "Placeholder Text 1",
+                "buttonLabelText": "Primary Button Text",
                 "buttonRedirectUrl": "http://example.com/"
             },
             "secondary": {
-                "buttonLabelText": "Placeholder Text 2",
+                "buttonLabelText": "Secondary Button Text",
                 "buttonRedirectUrl": "https://example.com/"
             }
         },
         "timestamps": {
-            "startTimestamp": "EPOCH_START_TIMESTAMP_THIS_IS_OPTIONAL",
-            "endTimestamp": "EPOCH_END_TIMESTAMP_THIS_IS_OPTIONAL",
-            "useTimer": "TRUE_OR_FALSE_WITHOUT_QUOTES"
+            "startTimestamp": "Optional_epoch_start_timestamp",
+            "endTimestamp": "Optional_epoch_end_timestamp",
+            "useTimer": "True_or_false_without_quotes"
         }
     }
 }
 ```
+
+![Breakdown](https://i.jayme.dev/p48TcWV.png)
+
+| Location                           	| Configuration             	| Notes                                                         	|
+|------------------------------------	|---------------------------	|---------------------------------------------------------------	|
+| First row below title              	| details                   	|                                                               	|
+| Second row below title             	| state                     	|                                                               	|
+| Third row below title              	| timestamps.startTimestamp 	| Converted to a format such as `12:34:56 elapsed`              	|
+|                                    	| timestamps.endTimestamp   	| Converted to a format such as `12:34:56 remaining`            	|
+| First button at the bottom         	| buttons.primary           	| Button can display any text, and have a link/url assigned     	|
+| Second button at the bottom        	| buttons.secondary         	| Button can display any text, and have a link/url assigned     	|
+| Text shown on large image:hover    	| assets.largeImageText     	|                                                               	|
+| Large image to the left of content 	| assets.largeImageKey      	| Four rows high, includes the title but not the bottom buttons 	|
+| Text shown on small image:hover    	| assets.smallImageText     	|                                                               	|
+| Small image to the left of content 	| assets.smallImageKey      	| Small icon inset on the bottom right of the `largeImageKey`   	|
+
+Sending `endTimestamp` will **always** have the time displayed as "remaining" until the given time. Sending `startTimestamp` will show "elapsed" as long as there is no `endTimestamp` sent.
 
 ## Discord Rich Presence Example
 
 ### `config.json`
 ```json
 {
-    "clientId": "REMOVED_FOR_OBVIOUS_REASONS",
+    "clientId": "792839335723663411",
     "rich_presence": {
         "details": "New Year's Eve Special",
         "state": "18:00 - 04:00 UTC",
