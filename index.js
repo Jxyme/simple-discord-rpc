@@ -132,7 +132,7 @@ function updatePresence() {
             ],
             timestamps: {
                 start: rpc.timestamps.useTimer ? Number(rpc.timestamps.startTimestamp) || Number(startTimestamp) : undefined,
-                end: rpc.timestamps.userTimer ? Number(rpc.timestamps.endTimestamp) : undefined
+                end: rpc.timestamps.useTimer ? Number(rpc.timestamps.endTimestamp) : undefined
             },
             instance: true
         }
