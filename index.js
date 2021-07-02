@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const { Client } = require('discord-rpc');
-const client = new Client({
+let client = new Client({
     transport: 'ipc'
 });
 
@@ -49,7 +49,11 @@ console.error = function () {
     originalConsoleError.apply(console, args);
 }
 
-console.log(INFO('Attempting to connect, please wait... (if it fails, "CTRL+R" in Discord and try again)'));
+let retryDuration = 15; // Retry in 15 seconds by default
+
+console.log(LOG(`Attempting to connect to Discord, please wait ${retryDuration} seconds...`));
+
+connectToDiscord();
 
 let protocol = new RegExp('^(http|https)://');
 let startTimestamp = new Date();
@@ -139,17 +143,33 @@ function updatePresence() {
     });
 }
 
-/* Once the client is ready, call onStartup() to execute initialTasks */
-
-client.on('ready', async () => {
-    console.log(SUCCESS(`Successfully authorised as ${client.user.username}#${client.user.discriminator}`));
-    try {
-        onStartup();
-    } catch (err) {
-        console.error(ERROR(err));
-    }
-});
-
 /* Login using the user's Discord Developer Application ID */
 
-client.login({ clientId: config.clientId }).catch(ERROR(console.error));
+function connectToDiscord() {
+    /* If a previous attempt was made, destroy the client before retrying */
+    if (client) {
+        client.destroy();
+        client = new Client ({
+            transport: 'ipc'
+        });
+    }
+    /* Once the client is ready, call onStartup() to execute initialTasks */
+    client.on('ready', async () => {
+        console.log(SUCCESS(`Successfully authorised as ${client.user.username}#${client.user.discriminator}`));
+        onStartup();
+    });
+    /* If the client fails to connect, automatically retry in duration specified */
+    setTimeout(() => {
+        client.login({ clientId: config.clientId });
+    }, retryDuration * 1000)
+}
+
+/* Handle 'Could not connect' error, proceed to retry if attempt fails */
+
+process.on('unhandledRejection', err => {
+    if (err.message === 'Could not connect') {
+        console.log(ERROR(`Unable to connect to Discord. Is Discord running and logged-in in the background?`));
+        console.log(LOG(`Automatically retrying to connect, please wait ${retryDuration} seconds...`));
+        connectToDiscord();
+    }
+});
