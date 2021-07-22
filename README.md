@@ -63,7 +63,7 @@ If you receive the `RPC_CONNECTION_TIMEOUT` error, please refresh Discord with `
 }
 ```
 
-![Breakdown](https://i.jayme.dev/p48TcWV.png)
+![Breakdown](https://raw.githubusercontent.com/Jxyme/simple-discord-rpc/main/screenshots/8zptsNqx.png)
 
 | Location                           	| Configuration             	| Notes                                                         	|
 |------------------------------------	|---------------------------	|---------------------------------------------------------------	|
@@ -116,4 +116,4 @@ Sending `endTimestamp` will **always** have the time displayed as "remaining" un
 
 ### This is one of many use cases I've experimented with throughout development, preview shown below.
 
-![Q-dance](https://i.jayme.dev/DZZdMYN.png)
+![Q-dance](https://raw.githubusercontent.com/Jxyme/simple-discord-rpc/main/screenshots/0abmzPzA.png)
