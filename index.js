@@ -76,36 +76,53 @@ function onStartup() {
 function validateConfig() {
     console.log(INFO(`Validating configuration...`));
     if (rpc.details && rpc.details.length > 128) {
-        return console.error(ERROR(`Details provided exceeds the maximum character length of 128.`));
+        console.error(ERROR(`Details provided exceeds the maximum character length of 128.`));
+        return process.exit(0)
     } else if (rpc.details && rpc.details.length < 2) {
-        return console.error(ERROR(`Details provided does not meet the minimum character length of 2.`));
+        console.error(ERROR(`Details provided does not meet the minimum character length of 2.`));
+        return process.exit(0)
     }
     if (rpc.state && rpc.state.length > 128) {
-        return console.error(ERROR(`State provided exceeds the maximum character length of 128.`));
+        console.error(ERROR(`State provided exceeds the maximum character length of 128.`));
+        return process.exit(0)
     } else if (rpc.state && rpc.state.length < 2) {
-        return console.error(ERROR(`State provided does not meet the minimum character length of 2.`));
+        console.error(ERROR(`State provided does not meet the minimum character length of 2.`));
+        return process.exit(0)
     }
     if (rpc.assets.largeImageText && rpc.assets.largeImageText.length > 32) {
-        return console.error(ERROR(`LargeImageText provided exceeds the maximum character length of 32.`));
+        console.error(ERROR(`LargeImageText provided exceeds the maximum character length of 32.`));
+        return process.exit(0)
     } else if (rpc.assets.largeImageText && rpc.assets.largeImageText.length < 2) {
-        return console.error(ERROR(`LargeImageText provided does not meet the minimum character length of 2.`));
+        console.error(ERROR(`LargeImageText provided does not meet the minimum character length of 2.`));
+        return process.exit(0)
     }
     if (rpc.assets.smallImageText && rpc.assets.smallImageText.length > 32) {
-        return console.error(ERROR(`SmallImageText provided exceeds the maximum character length of 32.`));
+        console.error(ERROR(`SmallImageText provided exceeds the maximum character length of 32.`));
+        return process.exit(0)
     } else if (rpc.assets.smallImageText && rpc.assets.smallImageText.length < 2) {
-        return console.error(ERROR(`SmallImageText provided does not meet the minimum character length of 2.`));
+        console.error(ERROR(`SmallImageText provided does not meet the minimum character length of 2.`));
+        return process.exit(0)
     }
     if (!rpc.buttons.primary.buttonLabelText || !rpc.buttons.secondary.buttonLabelText) {
-        return console.error(ERROR(`ButtonLabelText(s) provided does not meet the minimum character length of 1.`));
+        console.error(ERROR(`ButtonLabelText(s) provided does not meet the minimum character length of 1.`));
+        return process.exit(0)
     } else if (rpc.buttons.primary.buttonLabelText.length > 128 || rpc.buttons.secondary.buttonLabelText.length > 128) {
-        return console.error(ERROR(`ButtonLabelText(s) provided exceeds the maximum character length of 128.`));
+        console.error(ERROR(`ButtonLabelText(s) provided exceeds the maximum character length of 128.`));
+        return process.exit(0)
     }
     if (!protocol.test(rpc.buttons.primary.buttonRedirectUrl.toString())) {
-        return console.error(ERROR(`ButtonRedirectUrl(s) provided does not contain either "http://" OR "https://".`));
+        console.error(ERROR(`ButtonRedirectUrl(s) provided does not contain either "http://" OR "https://".`));
+        return process.exit(0)
     }
-    if (rpc.timestamps.startTimestamp && !(new Date(rpc.timestamps.startTimestamp)).getTime() > 0 || rpc.timestamps.startTimestamp === '' ||
-        rpc.timestamps.endTimestamp && !(new Date(rpc.timestamps.endTimestamp)).getTime() > 0 || rpc.timestamps.endTimestamp === '') {
-        return console.error(ERROR(`Timestamp(s) provided is not valid. Ensure you have provided an Epoch type.`));
+    if (rpc.timestamps.useTimer) {
+        if (rpc.timestamps.startTimestamp && !(new Date(rpc.timestamps.startTimestamp)).getTime() > 0 || rpc.timestamps.startTimestamp === '') {
+            console.error(ERROR(`'${rpc.timestamps.startTimestamp}' is not a valid startTimestamp. See here for more information: https://www.epochconverter.com/`));
+            return process.exit(0)
+        }
+        if (rpc.timestamps.endTimestamp && !(new Date(rpc.timestamps.endTimestamp)).getTime() > 0 || rpc.timestamps.endTimestamp === '') {
+            console.error(ERROR(`'${rpc.timestamps.endTimestamp}' is not a valid endTimestamp. See here for more information: https://www.epochconverter.com/`));
+            return process.exit(0)
+        }
     }
     console.log(SUCCESS(`Configuration is valid! Attempting to update ${client.user.username}#${client.user.discriminator}'s Rich Presence...`));
 }
@@ -126,17 +143,17 @@ function updatePresence() {
                 small_image: rpc.assets.smallImageKey ? rpc.assets.smallImageKey : undefined
             },
             buttons: [{
-                    label: rpc.buttons.primary.buttonLabelText,
-                    url: rpc.buttons.primary.buttonRedirectUrl
-                },
-                {
-                    label: rpc.buttons.secondary.buttonLabelText,
-                    url: rpc.buttons.secondary.buttonRedirectUrl
-                }
+                label: rpc.buttons.primary.buttonLabelText,
+                url: rpc.buttons.primary.buttonRedirectUrl
+            },
+            {
+                label: rpc.buttons.secondary.buttonLabelText,
+                url: rpc.buttons.secondary.buttonRedirectUrl
+            }
             ],
             timestamps: {
                 start: rpc.timestamps.useTimer ? Number(rpc.timestamps.startTimestamp) || Number(startTimestamp) : undefined,
-                end: rpc.timestamps.useTimer ? Number(rpc.timestamps.endTimestamp) : undefined
+                end: rpc.timestamps.useTimer && rpc.timestamps.endTimestamp !== null ? Number(rpc.timestamps.endTimestamp) : undefined
             },
             instance: true
         }
@@ -149,7 +166,7 @@ function connectToDiscord() {
     /* If a previous attempt was made, destroy the client before retrying */
     if (client) {
         client.destroy();
-        client = new Client ({
+        client = new Client({
             transport: 'ipc'
         });
     }
