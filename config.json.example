@@ -20,8 +20,8 @@
             }
         },
         "timestamps": {
-            "startTimestamp": "Optional_epoch_start_timestamp",
-            "endTimestamp": "Optional_epoch_end_timestamp",
+            "startTimestamp": "Optional_epoch_start_timestamp_without_quotes",
+            "endTimestamp": "Optional_epoch_end_timestamp_without_quotes",
             "useTimer": "True_or_false_without_quotes"
         }
     }

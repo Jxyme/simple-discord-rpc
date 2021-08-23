@@ -55,8 +55,8 @@ If you receive the `RPC_CONNECTION_TIMEOUT` error, please refresh Discord with `
             }
         },
         "timestamps": {
-            "startTimestamp": "Optional_epoch_start_timestamp",
-            "endTimestamp": "Optional_epoch_end_timestamp",
+            "startTimestamp": "Optional_epoch_start_timestamp_without_quotes",
+            "endTimestamp": "Optional_epoch_end_timestamp_without_quotes",
             "useTimer": "True_or_false_without_quotes"
         }
     }
@@ -106,9 +106,9 @@ Sending `endTimestamp` will **always** have the time displayed as "remaining" un
             }
         },
         "timestamps": {
-            "startTimestamp": null,
-            "endTimestamp": null,
-            "useTimer": false
+            "startTimestamp": 1609437650,
+            "endTimestamp": 1612065650,
+            "useTimer": true
         }
     }
 }
