@@ -146,7 +146,7 @@ For example, the **startTimestamp** is equal to `null` whilst the **endTimestamp
 
 ### Please note, Discord currently limits the timestamps to a maximum of 24 hours left or elapsed.
 
- - For example, if you set the **startTimestamp** to `Sat, 23 Oct 2021 10:45:00 UTC` and the **endTimestamp** to `10:50:00 UTC`<br> on `Sat 24 Oct 2021` the timer will display `05:00 left` instead of `24:05:00 left`.
+ - For example, if you set the **startTimestamp** to `Sat, 23 Oct 2021 10:45:00 UTC` and the **endTimestamp** to `Sat 24 Oct 2021 10:50:00 UTC` the timer will display `05:00 left` instead of `24:05:00 left`.
 
 ---
 
