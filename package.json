@@ -1,6 +1,6 @@
 {
   "name": "simple-discord-rpc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Beautify your Discord profile with a fully customizable Discord Rich Presence, now with buttons.",
   "main": "index.js",
   "scripts": {
