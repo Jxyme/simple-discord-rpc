@@ -103,16 +103,49 @@ function validateConfig() {
         console.error(ERROR(`SmallImageText provided does not meet the minimum character length of 2.`));
         return process.exit(0)
     }
-    if (!rpc.buttons.primary.buttonLabelText || !rpc.buttons.secondary.buttonLabelText) {
-        console.error(ERROR(`ButtonLabelText(s) provided does not meet the minimum character length of 1.`));
-        return process.exit(0)
-    } else if (rpc.buttons.primary.buttonLabelText.length > 128 || rpc.buttons.secondary.buttonLabelText.length > 128) {
-        console.error(ERROR(`ButtonLabelText(s) provided exceeds the maximum character length of 128.`));
-        return process.exit(0)
+    if (rpc.buttons.primary.label && rpc.buttons.primary.url) {
+        if (rpc.buttons.primary.label.length > 128) {
+            console.error(ERROR(`Primary button label provided exceeds the maximum character length of 128.`));
+            return process.exit(0)
+        } else if (rpc.buttons.primary.label.length < 2) {
+            console.error(ERROR(`Primary button label provided does not meet the minimum character length of 2.`));
+            return process.exit(0)
+        }
+    } else {
+        console.log(LOG(`Primary button label and/or url provided is undefined. No primary button will be displayed.`));
     }
-    if (!protocol.test(rpc.buttons.primary.buttonRedirectUrl.toString())) {
-        console.error(ERROR(`ButtonRedirectUrl(s) provided does not contain either "http://" OR "https://".`));
-        return process.exit(0)
+    if (rpc.buttons.primary.url) {
+        if (rpc.buttons.primary.url.length > 0 && rpc.buttons.primary.url.length <= 32) {
+            if (!protocol.test(rpc.buttons.primary.url.toString())) {
+                console.error(ERROR(`Primary button url provided does not contain either "http://" OR "https://".`));
+                return process.exit(0)
+            }
+        } else {
+            console.error(ERROR(`Primary button url provided exceeds the maximum character length of 32.`));
+            return process.exit(0)
+        }
+    }
+    if (rpc.buttons.secondary.label && rpc.buttons.secondary.url) {
+        if (rpc.buttons.secondary.label.length > 128) {
+            console.error(ERROR(`Secondary button label provided exceeds the maximum character length of 128.`));
+            return process.exit(0)
+        } else if (rpc.buttons.secondary.label.length < 2) {
+            console.error(ERROR(`Secondary button label provided does not meet the minimum character length of 2.`));
+            return process.exit(0)
+        }
+    } else {
+        console.log(LOG(`Secondary button label and/or url provided is undefined. No secondary button will be displayed.`));
+    }
+    if (rpc.buttons.secondary.url) {
+        if (rpc.buttons.secondary.url.length > 0 && rpc.buttons.secondary.url.length <= 32) {
+            if (!protocol.test(rpc.buttons.secondary.url.toString())) {
+                console.error(ERROR(`Secondary button url provided does not contain either "http://" OR "https://".`));
+                return process.exit(0)
+            }
+        } else {
+            console.error(ERROR(`Secondary button url provided exceeds the maximum character length of 32.`));
+            return process.exit(0)
+        }
     }
     if (rpc.timestamps.useTimer) {
         if (rpc.timestamps.startTimestamp && !(new Date(rpc.timestamps.startTimestamp)).getTime() > 0 || rpc.timestamps.startTimestamp === '') {
@@ -130,6 +163,16 @@ function validateConfig() {
 /* Update user's Rich Presence */
 
 function updatePresence() {
+    let buttons = [];
+    let buttonObj = Object.values(rpc.buttons);
+    buttonObj.forEach((button) => {
+        if (button.label && button.url !== null) {
+            buttons.push(button);
+        }
+    });
+    if (!buttons.length) {
+        buttons = false;
+    }
     console.log(INFO(`Successfully updated ${client.user.username}#${client.user.discriminator}'s Rich Presence!`));
     return client.request('SET_ACTIVITY', {
         pid: process.pid,
@@ -142,15 +185,7 @@ function updatePresence() {
                 small_text: rpc.assets.smallImageText ? rpc.assets.smallImageText : undefined,
                 small_image: rpc.assets.smallImageKey ? rpc.assets.smallImageKey : undefined
             },
-            buttons: [{
-                label: rpc.buttons.primary.buttonLabelText,
-                url: rpc.buttons.primary.buttonRedirectUrl
-            },
-            {
-                label: rpc.buttons.secondary.buttonLabelText,
-                url: rpc.buttons.secondary.buttonRedirectUrl
-            }
-            ],
+            buttons: buttons ? buttons : undefined,
             timestamps: {
                 start: rpc.timestamps.useTimer ? Number(rpc.timestamps.startTimestamp) || Number(startTimestamp) : undefined,
                 end: rpc.timestamps.useTimer && rpc.timestamps.endTimestamp !== null ? Number(rpc.timestamps.endTimestamp) : undefined

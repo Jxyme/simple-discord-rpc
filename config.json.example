@@ -11,12 +11,12 @@
         },
         "buttons": {
             "primary": {
-                "buttonLabelText": "Primary Button Text",
-                "buttonRedirectUrl": "http://example.com/"
+                "label": "Primary Button Text",
+                "url": "http://example.com/"
             },
             "secondary": {
-                "buttonLabelText": "Secondary Button Text",
-                "buttonRedirectUrl": "https://example.com/"
+                "label": "Secondary Button Text",
+                "url": "https://example.com/"
             }
         },
         "timestamps": {
