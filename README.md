@@ -47,12 +47,12 @@ If you receive the `RPC_CONNECTION_TIMEOUT` error, please refresh Discord with `
         },
         "buttons": {
             "primary": {
-                "buttonLabelText": "Primary Button Text",
-                "buttonRedirectUrl": "http://example.com/"
+                "label": "Primary Button Text",
+                "url": "http://example.com/"
             },
             "secondary": {
-                "buttonLabelText": "Secondary Button Text",
-                "buttonRedirectUrl": "https://example.com/"
+                "label": "Secondary Button Text",
+                "url": "https://example.com/"
             }
         },
         "timestamps": {
@@ -167,12 +167,12 @@ For example, the **startTimestamp** is equal to `null` whilst the **endTimestamp
         },
         "buttons": {
             "primary": {
-                "buttonLabelText": "Live Stream",
-                "buttonRedirectUrl": "https://live.q-dance.com/"
+                "label": "Live Stream",
+                "url": "https://live.q-dance.com/"
             },
             "secondary": {
-                "buttonLabelText": "Fork me on GitHub",
-                "buttonRedirectUrl": "https://jayme.dev/r/discord-rpc"
+                "label": "Fork me on GitHub",
+                "url": "https://jayme.dev/r/discord-rpc"
             }
         },
         "timestamps": {
