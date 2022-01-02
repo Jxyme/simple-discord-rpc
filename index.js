@@ -201,14 +201,21 @@ function connectToDiscord() {
     /* If a previous attempt was made, destroy the client before retrying */
     if (client) {
         client.destroy();
-        client = new Client({
-            transport: 'ipc'
-        });
     }
+    client = new Client({
+        transport: 'ipc'
+    });
     /* Once the client is ready, call onStartup() to execute initialTasks */
     client.on('ready', async () => {
         console.log(SUCCESS(`Successfully authorised as ${client.user.username}#${client.user.discriminator}`));
         onStartup();
+    });
+    /* Handle when Discord unexpectedly closes, attempt to reconnect if this happens */
+    client.transport.once('close', () => {
+        i = 0; // Reset initialTasks
+        console.log(ERROR(`Connection to Discord closed. Attempting to reconnect...`));
+        console.log(LOG(`Automatically retrying to connect, please wait ${retryDuration} seconds...`));
+        connectToDiscord();
     });
     /* If the client fails to connect, automatically retry in duration specified */
     setTimeout(() => {
