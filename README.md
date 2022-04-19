@@ -2,16 +2,14 @@
 
 Beautify your Discord profile with a fully customizable Discord Rich Presence, now with buttons.
 
+# YOU NEED TO BE USING THE [DESKTOP APPLICATION](https://discord.com/download) IN ORDER FOR THIS TO WORK. BOTH APPLICATIONS NEED TO BE RUNNING ON THE SAME DESKTOP PC.
+
 ### Table of Contents
-**[Notice](#notice)**<br>
 **[Requirements](#requirements)**<br>
 **[Usage Instructions](#usage-instructions)**<br>
 **[Configuration](#configuration-breakdown)**<br>
 **[Timestamps](#timestamp-breakdown)**<br>
 **[Example](#discord-rich-presence-example)**
-
-## Notice
-If you receive the `RPC_CONNECTION_TIMEOUT` error, please refresh Discord with `CTRL` + `R` whilst Discord is in focus, *then* try again.
 
 ## Requirements
 [NodeJS](https://nodejs.org/en/download/)
