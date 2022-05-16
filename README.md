@@ -4,6 +4,8 @@ Beautify your Discord profile with a fully customizable Discord Rich Presence, n
 
 # YOU NEED TO BE USING THE [DESKTOP APPLICATION](https://discord.com/download) IN ORDER FOR THIS TO WORK. BOTH APPLICATIONS NEED TO BE RUNNING ON THE SAME DESKTOP PC.
 
+# ! 24/7 SERVER HOSTING (E.G. REPLIT) WILL NOT WORK !
+
 ### Table of Contents
 **[Requirements](#requirements)**<br>
 **[Usage Instructions](#usage-instructions)**<br>
