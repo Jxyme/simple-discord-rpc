@@ -1,189 +1,297 @@
 # simple-discord-rpc
 
-Beautify your Discord profile with a fully customizable Discord Rich Presence, now with buttons.
+Beautify your Discord profile with a customisable Rich Presence, now with custom buttons, _and_ [Activity Types](#types).
 
-# YOU NEED TO BE USING THE [DESKTOP APPLICATION](https://discord.com/download) IN ORDER FOR THIS TO WORK. BOTH APPLICATIONS NEED TO BE RUNNING ON THE SAME DESKTOP PC.
+## Table of Contents
 
-# ! 24/7 SERVER HOSTING (E.G. REPLIT) WILL NOT WORK !
+### Getting Started
 
-### Table of Contents
-**[Requirements](#requirements)**<br>
-**[Usage Instructions](#usage-instructions)**<br>
-**[Configuration](#configuration-breakdown)**<br>
-**[Timestamps](#timestamp-breakdown)**<br>
-**[Example](#discord-rich-presence-example)**
+- [Requirements](#requirements)
+- [Usage Instructions](#usage-instructions)
+
+### Configuration File
+
+- [Timestamps](#timestamps)
+- [Assets](#assets)
+- [Buttons](#buttons)
+- [Types](#types)
+
+### Example
+
+- [Tomorrowland Brasil 2024](#tomorrowland-brasil-2024)
+
+# Getting Started
 
 ## Requirements
-[NodeJS](https://nodejs.org/en/download/)
+
+[Node.js](https://nodejs.org/en/download)
 
 [Discord Developer Application](https://discord.com/developers/applications)
 
+> [!IMPORTANT]
+> Discord must be open in the background, and logged-in on the same machine as `simple-discord-rpc`.
+
+[Discord Desktop Application](https://discord.com/download)
+
 ## Usage Instructions
-1. Download and install [NodeJS](https://nodejs.org/en/download/).
 
-2. Download the latest .ZIP from the [Releases](https://github.com/Jxyme/simple-discord-rpc/releases) section from this repo. (feel free to clone/fork for further tweaking/development)
+1. Download the latest `Source code (zip)` under `Assets` from the [releases page](https://github.com/Jxyme/simple-discord-rpc/releases/latest) on GitHub.
 
-3. Run `npm i` from inside of the directory to install all of the node_module required packages for the project.
+2. Extract `Source code (zip)` to your Desktop, then open the folder: `simple-discord-rpc-2.0.0`.
 
-4. Open the `config.json.example` file, modify the contents, and then save it as `config.json`. (see below for a few examples)
+3. Open `config.js` in your chosen text editor, and modify the Rich Presence to your liking before saving.
 
-5. Run `node .` or `node index.js` to start the application. (ensuring you followed Step 4 beforehand)
+4. Hold `Shift` + `Right-click` inside the folder and click `Open in Terminal` / `Open PowerShell window here`.
 
-## Configuration Breakdown
+5. Run `npm i` for the first time, then run `node .` or `node src/index.js` to start-up `simple-discord-rpc`.
 
-### `config.json.example`
+# Configuration File
 
-```json
+## Timestamps
+
+Convert a human-readable date to a unix timestamp using [EpochConverter](https://www.epochconverter.com/), or a Discord favourite: [HammerTime](https://hammertime.cyou/).
+
+### Example
+
+Time elapsed since `1735689600` (human-readable date: `01/01/2025 00:00:00 (GMT)`).
+
+```js
 {
-    "clientId": "Your_developer_application_client_id_goes_here",
-    "rich_presence": {
-        "details": "First_row_below_title",
-        "state": "Second_row_below_title",
-        "assets": {
-            "largeImageText": "Text_shown_on_large_image_hover",
-            "largeImageKey": "Large_image_to_the_left_of_content",
-            "smallImageText": "Text_shown_on_small_image_hover",
-            "smallImageKey": "Small_image_to_the_left_of_content"
-        },
-        "buttons": {
-            "primary": {
-                "label": "Primary Button Text",
-                "url": "http://example.com/"
-            },
-            "secondary": {
-                "label": "Secondary Button Text",
-                "url": "https://example.com/"
-            }
-        },
-        "timestamps": {
-            "startTimestamp": "Optional_epoch_start_timestamp_without_quotes",
-            "endTimestamp": "Optional_epoch_end_timestamp_without_quotes",
-            "useTimer": "True_or_false_without_quotes"
-        }
-    }
+  timestamps: {
+    startTimestamp: 1735689600, // 470:59:05 at the time of writing this
+    endTimestamp: undefined
+  }
 }
 ```
 
-![Breakdown](https://raw.githubusercontent.com/Jxyme/simple-discord-rpc/main/screenshots/8zptsNqx.png)
+> [!TIP]
+> You can now write Javascript in the `config.js` file to specify the `startTimestamp` and `endTimestamp`.
 
-| Location                           	| Configuration             	| Notes                                                         	|
-|------------------------------------	|---------------------------	|---------------------------------------------------------------	|
-| First row below title              	| details                   	|                                                               	|
-| Second row below title             	| state                     	|                                                               	|
-| Third row below title              	| timestamps.startTimestamp 	| Converted to a format such as `12:34:56 elapsed`              	|
-|                                    	| timestamps.endTimestamp   	| Converted to a format such as `12:34:56 remaining`            	|
-| First button at the bottom         	| buttons.primary           	| Button can display any text, and have a link/url assigned     	|
-| Second button at the bottom        	| buttons.secondary         	| Button can display any text, and have a link/url assigned     	|
-| Text shown on large image:hover    	| assets.largeImageText     	|                                                               	|
-| Large image to the left of content 	| assets.largeImageKey      	| Four rows high, includes the title but not the bottom buttons 	|
-| Text shown on small image:hover    	| assets.smallImageText     	|                                                               	|
-| Small image to the left of content 	| assets.smallImageKey      	| Small icon inset on the bottom right of the `largeImageKey`   	|
+### Examples
 
-Sending `endTimestamp` will **always** have the time displayed as "remaining" until the given time. Sending `startTimestamp` will show "elapsed" as long as there is no `endTimestamp` sent.
+Display your local time, converted to a `hh:mm:ss` (24 hour) format such as `12:01:00` (1 minute past midday).
 
-## Timestamp Breakdown
-
-### Show/hide timestamp
-
-The **useTimer** setting accepts either `true` or `false`. If you want to enable the timer, set it to `true`. Otherwise, set it to `false`.
-
----
-
-### Time elapsed
-
-Setting **startTimestamp** and **endTimestamp** to `null` whilst useTimer is `true` will display the time elapsed since the RPC was started.
-```json
-"timestamps": {
-    "startTimestamp": null,
-    "endTimestamp": null,
-    "useTimer": true
-}
-```
-For example, if I started the RPC at `Sat, 23 Oct 2021 09:00:00 UTC` it will display `00:00 elapsed` and from there, it will increase.
-
----
-
-Setting **startTimestamp** to an [Epoch](https://www.epochconverter.com/) value and **endTimestamp** to `null` will display the time elapsed since the start Epoch time/date.
-```json
-"timestamps": {
-    "startTimestamp": 1634981400,
-    "endTimestamp": null,
-    "useTimer": true
-}
-```
-For example, the **startTimestamp** is equal to `Sat, 23 Oct 2021 09:30:00 UTC` whilst the **endTimestamp** is equal to `null`.
-- If I started the RPC at `Sat, 23 Oct 2021 09:45:00 UTC` it will display `15:00 elapsed`.
-
----
-
-### Time left
-
-Setting **startTimestamp** and **endTimestamp** to an [Epoch](https://www.epochconverter.com/) value, with the **endTimestamp** being greater, will display the time left.
-```json
-"timestamps": {
-    "startTimestamp": 1634982600,
-    "endTimestamp": 1634983200,
-    "useTimer": true
-}
-```
-For example, the **startTimestamp** is equal to `Sat, 23 Oct 2021 09:50:00 UTC` whilst the **endTimestamp** is equal to `10:00:00 UTC`.<br>
-- If I started the RPC anywhere between `09:50:00 UTC - 10:00:00 UTC` it will display the time left until `10:00:00 UTC`.
-
----
-
-Setting **startTimestamp** to `null` and **endTimestamp** to an [Epoch](https://www.epochconverter.com/) value will display the time left until the end Epoch time/date is met.
-```json
-"timestamps": {
-    "startTimestamp": null,
-    "endTimestamp": 1634984400,
-    "useTimer": true
-}
-```
-For example, the **startTimestamp** is equal to `null` whilst the **endTimestamp** is equal to `Sat, 23 Oct 2021 10:20:00 UTC`.<br>
-- If I started the RPC at `10:00:00 UTC` it will display `20:00 left`.
-
----
-
-### Please note, Discord currently limits the timestamps to a maximum of 24 hours left or elapsed.
-
- - For example, if you set the **startTimestamp** to `Sat, 23 Oct 2021 10:45:00 UTC` and the **endTimestamp** to `Sat 24 Oct 2021 10:50:00 UTC` the timer will display `05:00 left` instead of `24:05:00 left`.
-
----
-
-## Discord Rich Presence Example
-
-### `config.json`
-```json
+```js
 {
-    "clientId": "792839335723663411",
-    "rich_presence": {
-        "details": "New Year's Eve Special",
-        "state": "18:00 - 04:00 UTC",
-        "assets": {
-            "largeImageText": "Q-dance",
-            "largeImageKey": "q-dance",
-            "smallImageText": "🧡",
-            "smallImageKey": "orange-heart"
-        },
-        "buttons": {
-            "primary": {
-                "label": "Live Stream",
-                "url": "https://live.q-dance.com/"
-            },
-            "secondary": {
-                "label": "Fork me on GitHub",
-                "url": "https://jayme.dev/r/discord-rpc"
-            }
-        },
-        "timestamps": {
-            "startTimestamp": 1609437650,
-            "endTimestamp": 1612065650,
-            "useTimer": true
-        }
-    }
+  timestamps: {
+    startTimestamp: new Date().setHours(0, 0, 0, 0), // time elapsed since midnight
+    endTimestamp: undefined
+  }
 }
 ```
 
-### This is one of many use cases I've experimented with throughout development, preview shown below.
+Countdown to an hour from now (the time will start from the moment you run `simple-discord-rpc`).
 
-![Q-dance](https://raw.githubusercontent.com/Jxyme/simple-discord-rpc/main/screenshots/0abmzPzA.png)
+```js
+{
+  timestamps: {
+    startTimestamp: Date.now(), // now as a unix timestamp
+    endTimestamp: Date.now() + 60 * 60 * 1000 // now + 1 hour in milliseconds
+  }
+}
+```
+
+> [!NOTE]
+> The activity `type` must be set to Listening (`2`), or Watching (`3`) when the `endTimestamp` is also provided.
+
+## Assets
+
+### Example
+
+```js
+{
+  assets: {
+    largeImageKey: 'heart', // asset named 'heart' I uploaded via the Developer Portal
+    largeImageText: '♥', // text displayed when hovering over the largeImageKey
+    smallImageKey: undefined,
+    smallImageText: undefined,
+  }
+}
+```
+
+> [!TIP]
+> You can now specify an external URL, as long as it meets the dimensions and size requirements for an asset.
+
+### Example
+
+```js
+{
+  assets: {
+    largeImageKey: 'https://cdn.7tv.app/emote/01F6MQ33FG000FFJ97ZB8MWV52/4x.gif', // catJAM
+    largeImageText: 'Meow', // text displayed when hovering over the largeImageKey
+    smallImageKey: undefined,
+    smallImageText: undefined,
+  }
+}
+```
+
+## Buttons
+
+> [!NOTE]
+> Buttons _may_ not render on your end, but other users on Discord will be able to see and interact with them.
+
+### Example
+
+```js
+{
+  buttons: {
+    primary: {
+      label: 'GitHub',
+      url: 'https://github.com/Jxyme/'
+    },
+    secondary: {
+      label: undefined,
+      url: undefined
+    }
+  }
+}
+```
+
+## Types
+
+> [!NOTE]
+> The `activity` object is limited to a `type` of Playing (`0`), Listening (`2`), Watching (`3`), or Competing (`5`).
+
+### Playing (`0`)
+
+```js
+{
+  type: 0
+}
+```
+
+#### Examples
+
+![Playing](/screenshots/playing-fields-v2.png)
+
+| Location                                 | Field Name        | Notes                                                                                                   |
+| ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| First row below title                    | details           |                                                                                                         |
+| Second row below title                   | state             | If provided with no `partySize` or `partyMax`                                                           |
+| First badge in the last row below title  | startTimestamp    | Converted to a `mm:ss` format such as `12:01`                                                           |
+| Second badge in the last row below title | state             | If provided with a `partySize` and `partyMax`                                                           |
+| Second badge in the last row below title | partySize         | In parenthesis next to the `state`, first number in the format `(1 of 4)`                               |
+| Second badge in the last row below title | partyMax          | In parenthesis next to the `state`, second number in the format `(1 of 4)`                              |
+| First button at the bottom               | buttons.primary   | Button has the text `buttons.primary.label` and when clicked links to the url `buttons.primary.url`     |
+| Second button at the bottom              | buttons.secondary | Button has the text `buttons.secondary.label` and when clicked links to the url `buttons.secondary.url` |
+| Large image to the left of any content   | largeImageKey     | Four rows high, includes the title but not the bottom buttons                                           |
+| Small image to the left of any content   | smallImageKey     | Small icon inset on the bottom right of the `largeImageKey`                                             |
+
+### Listening (`2`)
+
+```js
+{
+  type: 2
+}
+```
+
+#### Examples
+
+![Listening](/screenshots/listening-fields-v2.png)
+
+| Location                                 | Field Name        | Notes                                                                                                   |
+| ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| First row below title                    | details           |                                                                                                         |
+| Second row below title                   | state             |                                                                                                         |
+| First badge in the last row below title  | startTimestamp    | Converted to a `mm:ss` format such as `12:01`                                                           |
+| Second badge in the last row below title | endTimestamp      | If provided with `startTimestamp`, converted to a `mm:ss` format such as `12:01`                        |
+| First button at the bottom               | buttons.primary   | Button has the text `buttons.primary.label` and when clicked links to the url `buttons.primary.url`     |
+| Second button at the bottom              | buttons.secondary | Button has the text `buttons.secondary.label` and when clicked links to the url `buttons.secondary.url` |
+| Large image to the left of any content   | largeImageKey     | Four rows high, includes the title but not the bottom buttons                                           |
+| Small image to the left of any content   | smallImageKey     | Small icon inset on the bottom right of the `largeImageKey`                                             |
+
+### Watching (`3`)
+
+```js
+{
+  type: 3
+}
+```
+
+#### Examples
+
+![Watching](/screenshots/watching-fields-v2.png)
+
+| Location                                 | Field Name        | Notes                                                                                                   |
+| ---------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| First row below title                    | details           |                                                                                                         |
+| Second row below title                   | state             |                                                                                                         |
+| First badge in the last row below title  | startTimestamp    | Converted to a `mm:ss` format such as `12:01`                                                           |
+| Second badge in the last row below title | endTimestamp      | If provided with `startTimestamp`, converted to a `mm:ss` format such as `12:01`                        |
+| First button at the bottom               | buttons.primary   | Button has the text `buttons.primary.label` and when clicked links to the url `buttons.primary.url`     |
+| Second button at the bottom              | buttons.secondary | Button has the text `buttons.secondary.label` and when clicked links to the url `buttons.secondary.url` |
+| Large image to the left of any content   | largeImageKey     | Four rows high, includes the title but not the bottom buttons                                           |
+| Small image to the left of any content   | smallImageKey     | Small icon inset on the bottom right of the `largeImageKey`                                             |
+
+### Competing (`5`)
+
+```js
+{
+  type: 5
+}
+```
+
+#### Example
+
+![Competing](/screenshots/competing-fields-v2.png)
+
+| Location                               | Field Name        | Notes                                                                                                   |
+| -------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------- |
+| First row below title                  | details           |                                                                                                         |
+| Second row below title                 | state             |                                                                                                         |
+| First button at the bottom             | buttons.primary   | Button has the text `buttons.primary.label` and when clicked links to the url `buttons.primary.url`     |
+| Second button at the bottom            | buttons.secondary | Button has the text `buttons.secondary.label` and when clicked links to the url `buttons.secondary.url` |
+| Large image to the left of any content | largeImageKey     | Four rows high, includes the title but not the bottom buttons                                           |
+| Small image to the left of any content | smallImageKey     | Small icon inset on the bottom right of the `largeImageKey`                                             |
+
+> [!WARNING]
+> The layout may be subject to change without warning. Please keep this in mind when visiting at a later date.
+
+# Example
+
+## Tomorrowland Brasil 2024
+
+### `config.js`
+
+```js
+module.exports = {
+  applicationId: '1327713183372284027',
+  activity: {
+    details: 'Amber Broos',
+    state: 'Next: NERVO',
+    party: {
+      partySize: undefined,
+      partyMax: undefined,
+    },
+    timestamps: {
+      startTimestamp: new Date('2024-10-12 17:40:00').getTime(),
+      endTimestamp: new Date('2024-10-12 18:40:00').getTime(),
+    },
+    assets: {
+      largeImageKey: 'https://owr-schedule-cdn.tomorrowland.com/1585774431.jpg',
+      largeImageText: 'Amber Broos',
+      smallImageKey: 'https://owr-schedule-cdn.tomorrowland.com/1358567301.jpeg',
+      smallImageText: 'NERVO',
+    },
+    buttons: {
+      primary: {
+        label: 'Live Stream',
+        url: 'https://www.youtube.com/live/NC8P2lH_uYw',
+      },
+      secondary: {
+        label: 'Stream Schedule',
+        url: 'https://www.instagram.com/p/DA6NNcvuOx-',
+      },
+    },
+    type: 3,
+  },
+  connection: {
+    maxRetries: 7,
+    retryInterval: 10,
+  },
+}
+```
+
+|                        User Pop-out                         |                        User Profile                         |
+| :---------------------------------------------------------: | :---------------------------------------------------------: |
+| ![Tomorrowland Brasil 2024](/screenshots/rpc-example-1.png) | ![Tomorrowland Brasil 2024](/screenshots/rpc-example-2.png) |
