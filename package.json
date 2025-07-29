@@ -1,6 +1,6 @@
 {
   "name": "simple-discord-rpc",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Beautify your Discord profile with a customisable Rich Presence, now with custom buttons, and Activity Types.",
   "homepage": "https://github.com/Jxyme/simple-discord-rpc#readme",
   "bugs": {
