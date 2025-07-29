@@ -25,18 +25,23 @@ const sanitiseActivity = () => {
   })
   const sanitisedActivity = {
     details: activity.details,
+    detailsUrl: activity.detailsUrl,
     state: activity.state,
+    stateUrl: activity.stateUrl,
     partySize: activity.party.partySize,
     partyMax: activity.party.partyMax,
     startTimestamp: activity.timestamps.startTimestamp,
     endTimestamp: activity.timestamps.endTimestamp,
     largeImageKey: activity.assets.largeImageKey,
     largeImageText: activity.assets.largeImageText,
+    largeImageUrl: activity.assets.largeImageUrl,
     smallImageKey: activity.assets.smallImageKey,
     smallImageText: activity.assets.smallImageText,
+    smallImageUrl: activity.assets.smallImageUrl,
     buttons: buttons.length ? buttons : undefined,
     instance: false,
     type: activity.type,
+    statusDisplayType: activity.statusDisplayType ?? 0,
   }
   logger.info(`Attempting to update ${client.user?.username}'s Rich Presence.`)
   updateActivity(sanitisedActivity)

@@ -9,7 +9,9 @@ module.exports = {
   applicationId: '', // your developer application id
   activity: {
     details: undefined,
+    detailsUrl: undefined,
     state: undefined,
+    stateUrl: undefined,
     party: {
       partySize: undefined,
       partyMax: undefined,
@@ -21,8 +23,10 @@ module.exports = {
     assets: {
       largeImageKey: undefined,
       largeImageText: undefined,
+      largeImageUrl: undefined,
       smallImageKey: undefined,
       smallImageText: undefined,
+      smallImageUrl: undefined,
     },
     buttons: {
       primary: {
@@ -35,6 +39,7 @@ module.exports = {
       },
     },
     type: 0, // Playing: 0, Listening to: 2, Watching: 3, or Competing in: 5
+    statusDisplayType: 0, // Application Name: 0, State: 1, or Details: 2
   },
   connection: {
     maxRetries: 7, // number of retries to establish a connection with Discord (default: 7)

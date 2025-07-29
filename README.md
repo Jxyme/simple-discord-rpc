@@ -37,7 +37,7 @@ Beautify your Discord profile with a customisable Rich Presence, now with custom
 
 1. Download the latest `Source code (zip)` under `Assets` from the [releases page](https://github.com/Jxyme/simple-discord-rpc/releases/latest) on GitHub.
 
-2. Extract `Source code (zip)` to your Desktop, then open the folder: `simple-discord-rpc-2.0.0`.
+2. Extract `Source code (zip)` to your Desktop, then open the folder: `simple-discord-rpc-X.X.X`.
 
 3. Open `config.js` in your chosen text editor, and modify the Rich Presence to your liking before saving.
 
@@ -103,8 +103,10 @@ Countdown to an hour from now (the time will start from the moment you run `simp
   assets: {
     largeImageKey: 'heart', // asset named 'heart' I uploaded via the Developer Portal
     largeImageText: '♥', // text displayed when hovering over the largeImageKey
+    largeImageUrl: undefined, // url opened when clicking on the large image
     smallImageKey: undefined,
     smallImageText: undefined,
+    smallImageUrl: undefined,
   }
 }
 ```
@@ -119,8 +121,10 @@ Countdown to an hour from now (the time will start from the moment you run `simp
   assets: {
     largeImageKey: 'https://cdn.7tv.app/emote/01F6MQ33FG000FFJ97ZB8MWV52/4x.gif', // catJAM
     largeImageText: 'Meow', // text displayed when hovering over the largeImageKey
+    largeImageUrl: 'https://7tv.app/emotes/01F6MQ33FG000FFJ97ZB8MWV52', // url opened when clicking on the large image
     smallImageKey: undefined,
     smallImageText: undefined,
+    smallImageUrl: undefined,
   }
 }
 ```
@@ -258,7 +262,9 @@ module.exports = {
   applicationId: '1327713183372284027',
   activity: {
     details: 'Amber Broos',
+    detailsUrl: undefined,
     state: 'Next: NERVO',
+    stateUrl: undefined,
     party: {
       partySize: undefined,
       partyMax: undefined,
@@ -270,8 +276,10 @@ module.exports = {
     assets: {
       largeImageKey: 'https://owr-schedule-cdn.tomorrowland.com/1585774431.jpg',
       largeImageText: 'Amber Broos',
+      largeImageUrl: undefined,
       smallImageKey: 'https://owr-schedule-cdn.tomorrowland.com/1358567301.jpeg',
       smallImageText: 'NERVO',
+      smallImageUrl: undefined,
     },
     buttons: {
       primary: {
@@ -283,7 +291,8 @@ module.exports = {
         url: 'https://www.instagram.com/p/DA6NNcvuOx-',
       },
     },
-    type: 3,
+    type: 3, // Watching: 3
+    statusDisplayType: 0, // Application Name: 0
   },
   connection: {
     maxRetries: 7,
